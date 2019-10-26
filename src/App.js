@@ -1,24 +1,9 @@
-import React, { useState} from 'react';
-import Login from './Pages/StudentPages/Login';
-import Home from './Pages/StudentPages/Home';
-
-var authVal = false;
+import React from 'react';
+import RenderStudentLogin from './Pages/StudentPages/RenderStudentLogin';
 
 function App(){
-
-  const [user,setUser] = useState(null);
-
-  const submit=(value)=>{
-      setUser(value);
-      authVal = true;
-    }
-
-    if(user){
-      if(authVal){
-        return (<Home user={user} handleLogin={submit}/>)
-    }
-  }
-
-    return <Login handleLogin={submit}/>
+return(
+  <RenderStudentLogin/>
+)
 }
 export default App;
