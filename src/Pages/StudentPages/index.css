@@ -1,0 +1,37 @@
+
+
+h1{
+  text-align: center;
+}
+.container{
+  margin: 0;
+  padding-bottom: 10px;
+  align-items: flex-end;
+  background-image: linear-gradient(purple,indigo);
+  display:block;
+  height: 50px;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+a:hover{
+  text-decoration-line: none;
+  color:  white;
+}
+
+a{
+  text-decoration-line: none;
+  color:  orange;
+}
+
+#logout:hover{
+  text-decoration-line: none;
+  color:  white;
+}
+
+#logout{
+  padding: 0;
+  text-decoration-line: none;
+  color:  orange;
+}

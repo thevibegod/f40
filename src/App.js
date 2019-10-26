@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState} from 'react';
+import Login from './Pages/StudentPages/Login';
+import Home from './Pages/StudentPages/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+var authVal = false;
+
+function App(){
+
+  const [user,setUser] = useState(null);
+
+  const submit=(value)=>{
+      setUser(value);
+      authVal = true;
+    }
+
+    if(user){
+      if(authVal){
+        return (<Home user={user} handleLogin={submit}/>)
+    }
+  }
+
+    return <Login handleLogin={submit}/>
 }
-
 export default App;
