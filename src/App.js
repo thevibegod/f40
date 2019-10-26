@@ -13,9 +13,7 @@ export default function App(props){
       authVal = true;
 
     }
-    const handlePage =() => {
-      props.pageSetter('mentor');
-    }
+  
     if(user){
       if(authVal){
         return (<Home user={user} handleLogin={submit}/>)
@@ -24,6 +22,5 @@ export default function App(props){
 
     return (<div>
     <Login handleLogin={submit}/>
-    <p onClick={()=>handlePage()}>Mentor Login</p>
     </div>)
 }
