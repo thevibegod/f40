@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 //import "./index.css";
+import {Form,Button,Card,Jumbotron} from 'react-bootstrap';
 
 class Login extends Component {
   constructor(props) {
@@ -25,44 +26,33 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div className="jumbotron text-center">
-          <div clasName="container">
+        <Jumbotron>
+        <center>
+          <div className="container">
             <h1>Department of Electronics & Communication Engineering</h1>
             <h2>Kumaraguru College of Technology</h2>
             <h3>Student Portal - Log in</h3>
           </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="card shadow">
-            <form className="card-body">
-              <div className="form-group form-group-lg">
-                <label>User Name</label>
-                <br />
-                <input
-                  clasName="form-control form-control-lg"
-                  type="text"
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <br />
-                <input
-                  clasName="form-control form-control-lg"
-                  type="password"
-                  onChange={this.handleChange}
-                />
-              </div>
-              <br />
-              <input
-                className="form-control form-control-lg btn btn-primary"
-                type="button"
-                onClick={this.submit}
-                value="Log in"
-              />
-            </form>
-          </div>
-        </div>
+          </center>
+        </Jumbotron>
+        <center>
+        <Card border='primary' style={{ width: '18rem',alignItems:'center' }}>
+        <Card.Body>
+          <Form>
+            <Form.Group controlId="loginformusername">
+              <Form.Label>User Name</Form.Label>
+              <Form.Control type="text" placeholder="User name" onChange={this.handleChange} />
+            </Form.Group>
+            <Form.Group controlId="loginformpassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" onChange={this.handleChange}/>
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={this.submit} block={true}>
+            Log in
+            </Button>
+          </Form>
+          </Card.Body>
+          </Card></center>
       </div>
     );
   }

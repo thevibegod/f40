@@ -18,7 +18,7 @@ export default function Courses(){
         <div>
           <ol style={{listStyleType:'none'}}>
             {data.map((item) => {
-              return <li style={listItemStyles}><a href={item.link} target="_blank">{item.title}</a></li>
+              return <li style={listItemStyles}><a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a></li>
             })}
           </ol>
         </div>

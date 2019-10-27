@@ -13,8 +13,10 @@ constructor(props){
 
 render(){
   return(
-        <div className="container">
-          <ul style={listStyles}>
+    <div className="container-fluid">
+        <nav className="navbar navbar-inverse">
+
+          <ul className="navbar navbar-nav">
             <li style={listItemStyles}><Link to={'/'}>Home</Link></li>
             <li style={listItemStyles}><Link to={`/Profile&${this.props.username}`}>Profile</Link></li>
             <li style={listItemStyles}><Link to={`/Tasks&${this.props.username}`}>Tasks</Link></li>
@@ -23,7 +25,9 @@ render(){
             <li style={listItemStyles}><Link to={`/Courses&${this.props.username}`}>Courses</Link></li>
             <li style={listItemStyles}><button style={{padding:'0',background:'none',border:'none',fontSize: '20px'}} id="logout" onClick={this.killLogin}>Logout</button></li>
           </ul>
-        </div>
+
+        </nav>
+          </div>
 )}
 
 }
