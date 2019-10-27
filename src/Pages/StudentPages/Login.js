@@ -56,7 +56,7 @@ class Login extends Component {
               <br />
               <input
                 className="form-control form-control-lg btn btn-primary"
-                type="button"
+                type="submit"
                 onClick={this.submit}
                 value="Log in"
               />
