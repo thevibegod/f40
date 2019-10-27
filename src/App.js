@@ -7,8 +7,6 @@ var authVal = false;
 export default function App(props) {
   const [user, setUser] = useState(null);
 
-  const [user, setUser] = useState(null);
-
   const submit = value => {
     setUser(value);
     authVal = true;
