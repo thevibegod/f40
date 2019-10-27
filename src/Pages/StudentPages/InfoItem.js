@@ -1,30 +1,33 @@
-import React from 'react';
+import React from "react";
 
-export default function InfoItem({item}){
-
-  if(item.imgURL){
-  return(
-    <div style={infoBoxStyle}>
-      <h2 style={{textAlign:'center'}}>{item.title}</h2>
-  <p style={{textAlign:'center'}}> {item.desc}</p>
-      <center><img src={item.imgURL} alt="no-img" width="400px" height="250px"/></center>
-    </div>
-  )}
-  else{
-    return(
-      <div style={infoBoxStyle}>
-        <h2 style={{textAlign:'center'}}>{item.title}</h2>
-        <marquee scrollamount="10"><p> {item.desc}</p></marquee>
+export default function InfoItem({ item }) {
+  if (item.imgURL) {
+    return (
+      <div className="card shadow-sm p-3 m-2" style={{ width: 450 }}>
+        <img
+          className="card-img-top"
+          style={{ width: 400, height: 250 }}
+          src={item.imgURL}
+          alt="no-img"
+          width="400px"
+          height="250px"
+        />
+        <div clasName="card-body">
+          <h2 className="card-title">{item.title}</h2>
+          <p className="card-text"> {item.desc}</p>
+        </div>
       </div>
-    )
+    );
+  } else {
+    return (
+      <div className="card shadow">
+        <div className="card-body">
+          <h2 className="card-title">{item.title}</h2>
+          <marquee scrollamount="10">
+            <p className="card-text"> {item.desc}</p>
+          </marquee>
+        </div>
+      </div>
+    );
   }
-}
-
-
-const infoBoxStyle = {
-    marginTop:'10px',
-    marginLeft:'5px',
-    marginRight:'5px',
-    border : '1px solid gray',
-    borderRadius : '5px',
 }
