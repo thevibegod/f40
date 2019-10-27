@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "./Navbar";
+import MyNavbar from "./MyNavbar";
 import Events from "./Events";
 import Profile from "./Profile";
 import Tasks from "./Tasks";
@@ -19,7 +19,7 @@ export default class Home extends Component {
   render() {
     return (
       <div style={{ margin: "0", padding: "0" }}>
-        <Navbar
+        <MyNavbar
           className="navbar"
           username={this.props.user}
           handleLogin={this.props.handleLogin}

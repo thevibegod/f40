@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InfoItem from "./InfoItem.js";
-
+import { Row } from "react-bootstrap";
 export default function Events() {
   const [data, setData] = useState([]);
 
@@ -44,11 +44,11 @@ export default function Events() {
   return (
     <div className="container">
       <h1>Events</h1>
-      <div className="row justify-content-center">
+      <Row style={{ justifyContent: "center" }}>
         {data.map(item => {
           return <InfoItem item={item} key={item.uid} />;
         })}
-      </div>
+      </Row>
     </div>
   );
 }

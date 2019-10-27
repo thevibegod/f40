@@ -1,33 +1,32 @@
 import React from "react";
-
+import { Card } from "react-bootstrap";
 export default function InfoItem({ item }) {
   if (item.imgURL) {
     return (
-      <div className="card shadow-sm p-3 m-2" style={{ width: 450 }}>
-        <img
-          className="card-img-top"
-          style={{ width: 400, height: 250 }}
+      <Card style={{ width: 450, margin: 10 }}>
+        <Card.Img
+          variant="top"
           src={item.imgURL}
           alt="no-img"
           width="400px"
           height="250px"
         />
-        <div clasName="card-body">
-          <h2 className="card-title">{item.title}</h2>
-          <p className="card-text"> {item.desc}</p>
-        </div>
-      </div>
+        <Card.Body>
+          <Card.Title>{item.title}</Card.Title>
+          <Card.Text> {item.desc}</Card.Text>
+        </Card.Body>
+      </Card>
     );
   } else {
     return (
-      <div className="card shadow">
-        <div className="card-body">
-          <h2 className="card-title">{item.title}</h2>
+      <Card>
+        <Card.Body>
+          <Card.Title>{item.title}</Card.Title>
           <marquee scrollamount="10">
-            <p className="card-text"> {item.desc}</p>
+            <Card.Text> {item.desc}</Card.Text>
           </marquee>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     );
   }
 }

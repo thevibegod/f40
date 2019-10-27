@@ -36,7 +36,7 @@ class Login extends Component {
         </Jumbotron>
         <center>
           <Card
-            shadow
+            shadow="sm"
             border="primary"
             style={{ width: "18rem", alignItems: "center" }}
           >
