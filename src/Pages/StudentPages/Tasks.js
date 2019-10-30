@@ -1,4 +1,5 @@
 import React from 'react';
+import {Col,Card,Button,Form} from 'react-bootstrap';
 
 export default class Tasks extends React.Component{
 
@@ -19,11 +20,12 @@ export default class Tasks extends React.Component{
   }
   render(){
 
-    return(
-      <div><center><h1>Tasks</h1></center>
+    return(<div>
+  <center><h1>Tasks</h1></center>
   <div style={taskContainerStyle}>
-
-  <div style={taskStyle}>
+  <Col style={{ justifyContent: "center" }}>
+  <Card style={taskStyle}>
+  <Form>
   <center><b><p>Daily Task</p></b></center>
   <p>Topic:{this.state.task_data.daily_task_topic}</p>
   <div>
@@ -33,15 +35,16 @@ export default class Tasks extends React.Component{
   </div>
   <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
   <p>Feedback</p><input type="text" name="df" onChange={this.handleChange} value={this.state.daily_task_feedback}/>
-  <input type="button" onClick={this.handleSubmit}  value="Submit" style={{width:"60px",alignSelf:'center',marginTop:'5px'}}/>
+  <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
   </div>
   </div>
   <div>
   </div>
   </div>
-  </div>
+  </Form>
+  </Card>
 
-    <div style={taskStyle}>
+    <Card style={taskStyle}>
       <center><b><p>Monthly Task</p></b></center>
       <p>Topic:{this.state.task_data.monthly_task_topic}</p>
       <div>
@@ -51,13 +54,14 @@ export default class Tasks extends React.Component{
           </div>
           <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
             <p>Feedback</p><input type="text" name="mf" onChange={this.handleChange} value={this.state.monthly_task_feedback}/>
-            <input type="button" onClick={this.handleSubmit}  value="Submit" style={{width:"60px",alignSelf:'center',marginTop:'5px'}}/>
+            <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
           </div>
         </div>
       <div>
       </div>
   </div>
-</div>
+</Card>
+</Col>
 </div>
 </div>
 

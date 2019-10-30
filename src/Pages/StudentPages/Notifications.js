@@ -14,7 +14,7 @@ export default function Notifications(){
 
   return(
     <div style={notificationContainerStyle}>
-      <h1>Notifications</h1>
+      <center><h1>Notifications</h1></center>
       <div>
         {data.map((item) => {
           return <InfoItem item={item} key={item.uid}/>

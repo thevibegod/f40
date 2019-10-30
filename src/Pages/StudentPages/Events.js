@@ -43,7 +43,7 @@ export default function Events() {
 
   return (
     <div className="container">
-      <h1>Events</h1>
+      <center><h1>Events</h1></center>
       <Row style={{ justifyContent: "center" }}>
         {data.map(item => {
           return <InfoItem item={item} key={item.uid} />;

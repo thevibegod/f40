@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card,Image,Row } from "react-bootstrap";
 
 export default class Profile extends React.Component{
 
@@ -18,9 +19,9 @@ export default class Profile extends React.Component{
       <h1>My Profile</h1>
     </center>
     </div>
-    <div style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
+    <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
     <div>
-    <img src={this.state.profile.imgUrl} alt="No image" style={profileImageStyle}/>
+    <Image src={this.state.profile.imgUrl} alt="No image"  fluid roundedCircle/>
     </div>
     <div>
     <p><b>Name:</b>{this.state.profile.name}</p>
@@ -30,7 +31,7 @@ export default class Profile extends React.Component{
     <p><b>Attendance:</b>{this.state.profile.attendance}</p>
     <p><b>Academic Details:</b>{this.state.profile.academicDetails}</p>
     </div>
-    </div>
+    </Card>
   </div>
 );
 }

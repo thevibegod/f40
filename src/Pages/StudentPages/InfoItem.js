@@ -19,9 +19,9 @@ export default function InfoItem({ item }) {
     );
   } else {
     return (
-      <Card>
+      <Card style={{margin:'10px'}}>
         <Card.Body>
-          <Card.Title>{item.title}</Card.Title>
+          <Card.Title style={{textAlign:'center'}}>{item.title}</Card.Title>
           <marquee scrollamount="10">
             <Card.Text> {item.desc}</Card.Text>
           </marquee>

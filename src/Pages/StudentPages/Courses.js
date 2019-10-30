@@ -39,7 +39,7 @@ export default function Courses() {
 
   return (
     <div class="container">
-      <h1>Courses</h1>
+      <center><h1>Courses</h1></center>
       <div>
         <center>
           <h2>Here are some courses recommended for you</h2>
@@ -47,7 +47,10 @@ export default function Courses() {
         <ListGroup>
           {data.map(item => {
             return (
-              <ListGroup.Item
+              <ListGroup.Item style={{padding: "20px",
+              textAlign: "center",
+              marginBottom: "20px",
+              border: "1px solid gray"}}
                 action
                 href={item.link}
                 target="_blank"
@@ -62,17 +65,3 @@ export default function Courses() {
     </div>
   );
 }
-
-const courseContainerStyle = {
-  fontFamily: "Helvetica",
-  fontSize: "20px"
-};
-
-const listItemStyles = {
-  padding: "20px",
-  textAlign: "center",
-  marginBottom: "20px",
-  border: "1px solid gray",
-  borderRadius: "5px",
-  marginRight: "50px"
-};
