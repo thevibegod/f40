@@ -8,7 +8,7 @@ export default function Notifications(){
   useEffect(() => {
     //fetch operation
 
-      setData([{uid:0,title:'Internal Examinations',desc:'The Second Internal Examinations will be held starting from 18th October.'},{uid:1,title:'n2',desc:'desc2'},{uid:2,title:'n3',desc:'desc3'}]);
+      setData([{uid:0,title:'Internal Examinations',desc:'The Second Internal Examinations will be held starting from 18th October.'},{uid:1,title:'Engineering Clinics Hackathon',desc:'The Hackathon for Engineering Clinics for second years will be held on 11/11/19.'},{uid:2,title:'Semester Examinations',desc:'The End Semester Examinations for second years will be held starting from 18/11/19 to 27/11/19'}]);
   },[]);
 
 

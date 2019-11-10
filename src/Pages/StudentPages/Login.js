@@ -17,8 +17,8 @@ class Login extends Component {
   };
 
   submit = event => {
-    if (this.state.username === "admin" && this.state.password === "admin") {
-      this.props.handleLogin("17BECXXX");
+    if (this.state.username === "18BEC076" && this.state.password === "18BEC076") {
+      this.props.handleLogin("18BEC076");
     }
   };
 

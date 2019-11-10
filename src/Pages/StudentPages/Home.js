@@ -7,6 +7,7 @@ import Assessments from "./Assessments.js";
 import Notifications from "./Notifications.js";
 import Courses from "./Courses.js";
 import NotFound from "./NotFound.js";
+import {Jumbotron} from 'react-bootstrap';
 
 //import './index.css';
 import { Route, Switch } from "react-router-dom";
@@ -24,6 +25,14 @@ export default class Home extends Component {
           username={this.props.user}
           handleLogin={this.props.handleLogin}
         />
+        <Jumbotron>
+          <center>
+            <div className="container">
+              <h1>Department of Electronics & Communication Engineering</h1>
+              <h2>Kumaraguru College of Technology</h2>
+            </div>
+          </center>
+        </Jumbotron>
         <Switch>
           <Route exact path="/" component={Events} />
           <Route
