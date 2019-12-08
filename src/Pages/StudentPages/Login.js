@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import { Form, Button, Card, Jumbotron } from "react-bootstrap";
 
 class Login extends Component {
@@ -16,12 +17,19 @@ class Login extends Component {
     }
   };
 
-  submit = event => {
-    if (this.state.username === "18BEC076" && this.state.password === "18BEC076") {
-      this.props.handleLogin("18BEC076");
+  submit = (event) => {
+    let check=false;
+  event.preventDefault();
+    axios.post('https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/validateuser',{username:this.state.username,password:this.state.password})
+  .then((response)=> {
+    if(response.data){
+      this.props.handleLogin(this.state.username);
     }
-  };
-
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
   render() {
     return (
       <div>
@@ -41,10 +49,11 @@ class Login extends Component {
             style={{ width: "18rem", alignItems: "center" }}
           >
             <Card.Body>
-              <Form>
+              <Form onSubmit={this.submit}>
                 <Form.Group controlId="loginformusername">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
+                    name="username"
                     type="text"
                     placeholder="User name"
                     onChange={this.handleChange}
@@ -53,6 +62,7 @@ class Login extends Component {
                 <Form.Group controlId="loginformpassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    name="password"
                     type="password"
                     placeholder="Password"
                     onChange={this.handleChange}
@@ -61,7 +71,6 @@ class Login extends Component {
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={this.submit}
                   block={true}
                 >
                   Log in

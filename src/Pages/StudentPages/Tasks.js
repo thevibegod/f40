@@ -6,7 +6,7 @@ export default class Tasks extends React.Component{
   state = {task_data:{}}
 
   componentDidMount(){
-    const data = {daily_task_topic:'Daily-Task',daily_task_attachment:null,daily_task_feedback:'Feedback',monthly_task_topic:'Monthly-Task',monthly_task_attachment:null,monthly_task_feedback:'Feedback'}
+    const data = {daily_task_topic:'Daily-Task',daily_task_attachment:null,daily_task_feedback:'Feedback',monthly_task_topic:'Monthly-Task',monthly_task_attachment:null,monthly_task_feedback:'Feedback',daily_graded:false,daily_task_score:0,monthly_task_score:80,monthly_graded:true}
     this.setState({task_data:data})
   }
 
@@ -36,6 +36,7 @@ export default class Tasks extends React.Component{
   <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
   <p>Feedback</p><input type="text" name="df" onChange={this.handleChange} value={this.state.daily_task_feedback}/>
   <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
+  {this.state.task_data.daily_graded?<p>You scored {this.state.task_data.daily_task_score}} out of 100</p>:<p>Your submission is not graded yet.</p>}
   </div>
   </div>
   <div>
@@ -55,6 +56,7 @@ export default class Tasks extends React.Component{
           <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
             <p>Feedback</p><input type="text" name="mf" onChange={this.handleChange} value={this.state.monthly_task_feedback}/>
             <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
+            {this.state.task_data.monthly_graded?<p>You scored {this.state.task_data.monthly_task_score} out of 100</p>:<p>Your submission is not graded yet.</p>}
           </div>
         </div>
       <div>

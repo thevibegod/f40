@@ -47,9 +47,9 @@ export default class MyNavbar extends React.Component {
               Courses
             </Link>
           </Nav>
-          <Button variant="outline-danger" id="logout" onClick={this.killLogin}>
+          <Link className="nav-link" to={`/`}onClick={this.killLogin}>
             Logout
-          </Button>
+          </Link>
         </Navbar.Collapse>
       </Navbar>
     );
