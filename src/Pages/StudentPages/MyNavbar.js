@@ -39,6 +39,12 @@ export default class MyNavbar extends React.Component {
             </Link>
             <Link
               className="nav-link"
+              to={`/AttendanceDetails&${this.props.username}`}
+            >
+              Attendance
+            </Link>
+            <Link
+              className="nav-link"
               to={`/Notifications&${this.props.username}`}
             >
               Notifications

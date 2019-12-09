@@ -6,6 +6,7 @@ import Tasks from "./Tasks";
 import Assessments from "./Assessments.js";
 import Notifications from "./Notifications.js";
 import Courses from "./Courses.js";
+import AttendanceDetails from './AttendanceDetails.js';
 import NotFound from "./NotFound.js";
 import {Jumbotron} from 'react-bootstrap';
 
@@ -41,6 +42,11 @@ export default class Home extends Component {
             exact
             path={`/Profile&${this.props.user}`}
             component={()=><Profile user={this.state.user}/>}
+          />
+          <Route
+            exact
+            path={`/AttendanceDetails&${this.props.user}`}
+            component={()=><AttendanceDetails user={this.state.user}/>}
           />
           <Route exact path={`/Tasks&${this.props.user}`} component={Tasks} />
           <Route
