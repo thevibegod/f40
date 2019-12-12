@@ -1,22 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import InfoItem from "./InfoItem.js";
 import Loading from './Loading';
 import axios from "axios";
 import { Row } from "react-bootstrap";
+
+import server from '../../config/server';
+
 export default class Events extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = { data: [], loading: true };
   }
   componentDidMount = () => {
     let dataMap = [];
+
     const headers = {
       "Content-Type": "application/json",
       "X-Access-Token": this.props.token
     };
+
+
     axios
       .get(
-        "https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/getallevents",
+        server+"/getallevents",
         { headers }
       )
       .then(res => {
@@ -25,7 +32,7 @@ export default class Events extends React.Component {
         return Promise.all(
           res.data.map(value => {
             return fetch(
-              `https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/eventpicture?title=${value.title}`,
+              server+`/eventpicture?title=${value.title}`,
               { headers }
             );
           })

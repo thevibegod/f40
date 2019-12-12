@@ -57,12 +57,12 @@ export default class Home extends Component {
           <Route
             exact
             path={`/Notifications&${this.props.user}`}
-            component={Notifications}
+            component={()=><Notifications user={this.state.user} token={this.props.token}/>}
           />
           <Route
             exact
             path={`/Courses&${this.props.user}`}
-            component={Courses}
+            component={()=><Courses user={this.state.user} token={this.props.token}/>}
           />
           <Route component={NotFound} />
         </Switch>

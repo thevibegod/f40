@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import { Card,Image,Row } from "react-bootstrap";
+import Loading from './Loading';
+
+import server from '../../config/server';
 
 export default class Profile extends React.Component{
   constructor(props){
     super(props);
   }
-  state = {profileDetails:{},profilePicture:{},achievementDetails:{details:["Attended SIH","NPTEL TOPPER"]}}
+  state = {profileDetails:{},profilePicture:{},achievementDetails:{details:["Attended SIH","NPTEL TOPPER"]},profileLoading:true,profilePictureLoading:true}
 
   componentDidMount(){
     let data;
@@ -15,9 +18,9 @@ export default class Profile extends React.Component{
       'X-Access-Token':this.props.token
     }
 
-    axios.get(`https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/studentprofiledetails?rollNo=${this.props.user}`,{headers}).then(res=>this.setState({profileDetails:res.data}))
-      .then(()=>fetch(`https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/studentprofilepicture?rollNo=${this.props.user}`,{headers}))
-        .then(res=>res.blob()).then((blob)=>this.setState({profilePicture:URL.createObjectURL(blob)}))
+    axios.get(server+`/studentprofiledetails?rollNo=${this.props.user}`,{headers}).then(res=>this.setState({profileDetails:res.data,profileLoading:false}))
+      .then(()=>fetch(server+`/studentprofilepicture?rollNo=${this.props.user}`,{headers}))
+        .then(res=>res.blob()).then((blob)=>this.setState({profilePicture:URL.createObjectURL(blob),profilePictureLoading:false}))
   }
 
   render(){
@@ -31,15 +34,15 @@ export default class Profile extends React.Component{
     </div>
     <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
     <div>
-    <Image src={this.state.profilePicture} alt="No image"  fluid roundedCircle style={{height:"300px",
-    width:"280px",}}/>
+    {this.state.profilePictureLoading?<Loading/>:<Image src={this.state.profilePicture} alt="No image"  fluid roundedCircle style={{height:"300px",
+    width:"280px",}}/>}
     </div>
     <div>
-    <p><b>Name:</b>{this.state.profileDetails.name}</p>
+    {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.name}</p>
     <p><b>RollNo:</b>{this.state.profileDetails.rollNo}</p>
     <p><b>Batch:</b>{this.state.profileDetails.batch}</p>
     <p><b>Mentor Name:</b>{this.state.profileDetails.mentorName}</p>
-    <p><b>Attendance:</b>{this.state.profileDetails.attendance}</p>
+    <p><b>Attendance:</b>{this.state.profileDetails.attendance}</p></div>}
     </div>
     </Card>
     <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>

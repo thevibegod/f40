@@ -1,42 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Accordion,Card,Button } from "react-bootstrap";
-export default function Courses() {
+
+import Loading from './Loading';
+import axios from 'axios';
+import server from '../../config/server';
+
+export default function Courses({token}) {
   const [data, setData] = useState([]);
+  const [loading,setLoading] = useState(true);
 
   useEffect(() => {
     //fetch operation
 
-    setData([
-      {
-        uid: 0,
-        title: "Python for Everybody-Coursera",
-        link: "https://www.coursera.org/specializations/python"
-      },
-      {
-        uid: 1,
-        title: "Tech Explorations™ Arduino Step by Step Getting Serious-Udemy",
-        link: "https://www.udemy.com/course/arduino-sbs-getting-serious/"
-      },
-      {
-        uid: 2,
-        title: "Java Programming Masterclass for Software Developers-Udemy",
-        link:
-          "https://www.udemy.com/course/java-the-complete-java-developer-course/"
-      },
-      {
-        uid: 3,
-        title: "Applied Data Science with Python Specialization-Coursera",
-        link: "https://www.coursera.org/specializations/data-science-python"
-      },
-      {
-        uid: 4,
-        title: "Hello (Real) World with ROS – Robot Operating System-edx",
-        link:
-          "https://courses.edx.org/courses/course-v1:DelftX+ROS1x+3T2018/course/"
-      }
-    ]);
+    const headers = {
+      'Content-Type':'application/json',
+      'X-Access-Token':token
+    }
+
+    axios.get(server+'/getallcourses',{headers}).then(res=>{
+      console.log(res.data)
+      setData(res.data);
+      setLoading(false);
+    })
+
+
   }, []);
 
+if(loading){
+  return<div>
+  <center><h1>Courses</h1></center>
+  <Loading/></div>
+}
   return (
     <div className="container">
       <center><h1>Courses</h1></center>
@@ -52,16 +46,16 @@ export default function Courses() {
               marginBottom: "20px",
               border: "1px solid gray"}}>
                 <Card.Header style={{textAlign:"center"}}>
-                  <Accordion.Toggle as={Button} variant="link" eventKey={item.uid}>
+                  <Accordion.Toggle as={Button} variant="link" eventKey={item._id}>
                     <p>{item.title}</p>
                   </Accordion.Toggle>
                 </Card.Header>
-                <Accordion.Collapse eventKey={item.uid}>
+                <Accordion.Collapse eventKey={item._id}>
                   <Card.Body>
                     <p>Description:{item.desc}</p>
                     <p>Price:{item.price}</p>
                     <p>Financial Aid available:{item.financialaid}</p>
-                    <a href={item.link} target="_blank" rel="noopener noreferrer">Click here</a>
+                    <a href={item.link} target="_blank" rel="noopener noreferrer">Go to Course</a>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
