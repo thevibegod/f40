@@ -7,7 +7,7 @@ class Login extends Component {
     super(props);
   }
 
-  state = { username: "", password: "" };
+  state = { username: "", password: ""};
 
   handleChange = event => {
     if (event.target.type === "text") {
@@ -23,7 +23,7 @@ class Login extends Component {
     axios.post('https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/validateuser',{username:this.state.username,password:this.state.password})
   .then((response)=> {
     if(response.data){
-      this.props.handleLogin(this.state.username);
+      this.props.handleLogin(this.state.username,response.data.token);
     }
   })
   .catch(function (error) {

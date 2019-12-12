@@ -6,14 +6,15 @@ import Home from "./Pages/StudentPages/Home";
 
 export default function App(props) {
   const [user, setUser] = useState(null);
+  const [token,setToken] = useState('')
 
   if (user) {
-      return <Home user={user} handleLogin={(value)=>setUser(value)} />;
+      return <Home user={user} token={token} handleLogin={(user,token)=>{setUser(user);setToken(token)}} />;
   }
 
   return (
     <div>
-      <Login handleLogin={(value)=>setUser(value)} />
+      <Login handleLogin={(user,token)=>{setUser(user);setToken(token)}} />
     </div>
   );
 }

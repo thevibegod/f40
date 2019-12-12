@@ -6,12 +6,17 @@ export default class Profile extends React.Component{
   constructor(props){
     super(props);
   }
-  state = {profileDetails:{},profilePicture:{}}
+  state = {profileDetails:{},profilePicture:{},achievementDetails:{details:["Attended SIH","NPTEL TOPPER"]}}
 
   componentDidMount(){
     let data;
-    axios.get(`https://f40-server.adarshfrompupil.now.sh/studentprofiledetails?rollNo=${this.props.user}`).then(res=>this.setState({profileDetails:res.data}))
-      .then(()=>fetch(`https://f40-server.adarshfrompupil.now.sh/studentprofilepicture?rollNo=${this.props.user}`))
+    const headers = {
+      'Content-Type':'application/json',
+      'X-Access-Token':this.props.token
+    }
+
+    axios.get(`https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/studentprofiledetails?rollNo=${this.props.user}`,{headers}).then(res=>this.setState({profileDetails:res.data}))
+      .then(()=>fetch(`https://cors-anywhere.herokuapp.com/f40-server.adarshfrompupil.now.sh/studentprofilepicture?rollNo=${this.props.user}`,{headers}))
         .then(res=>res.blob()).then((blob)=>this.setState({profilePicture:URL.createObjectURL(blob)}))
   }
 
@@ -35,6 +40,16 @@ export default class Profile extends React.Component{
     <p><b>Batch:</b>{this.state.profileDetails.batch}</p>
     <p><b>Mentor Name:</b>{this.state.profileDetails.mentorName}</p>
     <p><b>Attendance:</b>{this.state.profileDetails.attendance}</p>
+    </div>
+    </Card>
+    <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
+    <div>
+    <p>Achievements</p>
+    <ol>
+    {this.state.achievementDetails.details.map((data)=>{
+      return <li>{data}</li>
+    })}
+    </ol>
     </div>
     </Card>
   </div>

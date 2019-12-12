@@ -37,11 +37,11 @@ export default class Home extends Component {
           </center>
         </Jumbotron>
         <Switch>
-          <Route exact path="/" component={()=><Events user={this.state.user}/>} />
+          <Route exact path="/" component={()=><Events user={this.state.user} token={this.props.token}/>} />
           <Route
             exact
             path={`/Profile&${this.props.user}`}
-            component={()=><Profile user={this.state.user}/>}
+            component={()=><Profile user={this.state.user} token={this.props.token}/>}
           />
           <Route
             exact

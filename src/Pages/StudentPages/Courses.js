@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup } from "react-bootstrap";
+import { Accordion,Card,Button } from "react-bootstrap";
 export default function Courses() {
   const [data, setData] = useState([]);
 
@@ -38,29 +38,36 @@ export default function Courses() {
   }, []);
 
   return (
-    <div class="container">
+    <div className="container">
       <center><h1>Courses</h1></center>
       <div>
         <center>
           <h2>Here are some courses recommended for you</h2>
         </center>
-        <ListGroup>
+        <Accordion>
           {data.map(item => {
             return (
-              <ListGroup.Item style={{padding: "20px",
-              textAlign: "center",
+              <Card style={{padding: "20px",
+              textAlign: "left",
               marginBottom: "20px",
-              border: "1px solid gray"}}
-                action
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.title}
-              </ListGroup.Item>
+              border: "1px solid gray"}}>
+                <Card.Header style={{textAlign:"center"}}>
+                  <Accordion.Toggle as={Button} variant="link" eventKey={item.uid}>
+                    <p>{item.title}</p>
+                  </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey={item.uid}>
+                  <Card.Body>
+                    <p>Description:{item.desc}</p>
+                    <p>Price:{item.price}</p>
+                    <p>Financial Aid available:{item.financialaid}</p>
+                    <a href={item.link} target="_blank" rel="noopener noreferrer">Click here</a>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
             );
           })}
-        </ListGroup>
+        </Accordion>
       </div>
     </div>
   );
