@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InfoItem from "./InfoItem.js";
+import Loading from './Loading';
 import axios from "axios";
 import { Row } from "react-bootstrap";
 export default class Events extends React.Component {
@@ -44,7 +45,7 @@ export default class Events extends React.Component {
   };
   render() {
     if (this.state.loading) {
-      return <p>Loading</p>;
+      return <Loading/>;
     } else {
       return (
         <div className="container">
