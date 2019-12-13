@@ -5,6 +5,7 @@ import Loading from './Loading';
 
 import server from '../../config/server';
 
+
 export default class Profile extends React.Component{
   constructor(props){
     super(props);
@@ -22,6 +23,25 @@ export default class Profile extends React.Component{
         .then(res=>res.blob()).then((blob)=>this.setState({profilePicture:URL.createObjectURL(blob),profilePictureLoading:false}))
   }
 
+  Achievements = ({achievements}) => {
+    if(achievements===undefined || achievements.length===0){
+      return null;
+    }
+    return (
+      <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
+      <div>
+
+      <ol>
+        <b>Achievements</b>
+      {achievements.map((data)=>{
+        return <li>{data}</li>
+      })}
+      </ol>
+      </div>
+      </Card>
+    );
+  }
+
   render(){
     console.log(this.state)
     return(
@@ -36,26 +56,30 @@ export default class Profile extends React.Component{
     {this.state.profilePictureLoading?<Loading/>:<Image src={this.state.profilePicture} alt="No image"  fluid roundedCircle style={{height:"300px",
     width:"280px",}}/>}
     </div>
-    <div>
+
     {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.name}</p>
     <p><b>RollNo:</b>{this.state.profileDetails.rollNo}</p>
     <p><b>Batch:</b>{this.state.profileDetails.batch}</p>
-    <p><b>Mentor Name:</b>{this.state.profileDetails.mentorName}</p>
-    <p><b>Attendance:</b>{this.state.profileDetails.attendance}</p></div>}
-    </div>
-    </Card>{
-    this.state.profileDetails.achievements &&
-    <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
-    <div>
-    <b>Achievements</b>
-    <ol>
-    {this.state.profileDetails.achievements.map((data)=>{
-      return <li>{data}</li>
-    })}
-    </ol>
-    </div>
+    <p><b>Email:</b>{this.state.profileDetails.mailId}</p>
+  </div>}
     </Card>
-  }
+    <div>
+      <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
+        <b>Student Mentor Details</b>
+        {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.studentMentorName}</p>
+        <p><b>Email:</b>{this.state.profileDetails.studentMentorMail}</p>
+        <p><b>Contact No.:</b>{this.state.profileDetails.studentMentorPhone}</p>
+      </div>}
+      </Card>
+      <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
+        <b>Faculty Mentor Details</b>
+        {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.facultyMentorName}</p>
+        <p><b>Email:</b>{this.state.profileDetails.facultyMentorMail}</p>
+        <p><b>Contact No.:</b>{this.state.profileDetails.facultyMentorPhone}</p>
+      </div>}
+      </Card>
+    </div>
+    {this.Achievements}
   </div>
 );
 }
