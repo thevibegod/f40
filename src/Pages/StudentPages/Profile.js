@@ -9,10 +9,9 @@ export default class Profile extends React.Component{
   constructor(props){
     super(props);
   }
-  state = {profileDetails:{},profilePicture:{},achievementDetails:{details:["Attended SIH","NPTEL TOPPER"]},profileLoading:true,profilePictureLoading:true}
+  state = {profileDetails:{},profilePicture:{},profileLoading:true,profilePictureLoading:true}
 
   componentDidMount(){
-    let data;
     const headers = {
       'Content-Type':'application/json',
       'X-Access-Token':this.props.token
@@ -24,7 +23,7 @@ export default class Profile extends React.Component{
   }
 
   render(){
-
+    console.log(this.state)
     return(
   <div style={profileContainerStyle}>
     <div style={{marginBottom:'60px'}}>
@@ -44,17 +43,19 @@ export default class Profile extends React.Component{
     <p><b>Mentor Name:</b>{this.state.profileDetails.mentorName}</p>
     <p><b>Attendance:</b>{this.state.profileDetails.attendance}</p></div>}
     </div>
-    </Card>
+    </Card>{
+    this.state.profileDetails.achievements &&
     <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
     <div>
-    <p>Achievements</p>
+    <b>Achievements</b>
     <ol>
-    {this.state.achievementDetails.details.map((data)=>{
+    {this.state.profileDetails.achievements.map((data)=>{
       return <li>{data}</li>
     })}
     </ol>
     </div>
     </Card>
+  }
   </div>
 );
 }
