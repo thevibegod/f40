@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { Card,Image,Row } from "react-bootstrap";
+import {Card, Image, Row } from 'react-bootstrap';
 import Loading from './Loading';
-
 import server from '../../config/server';
 
 
@@ -10,7 +9,12 @@ export default class Profile extends React.Component{
   constructor(props){
     super(props);
   }
-  state = {profileDetails:{},profilePicture:{},profileLoading:true,profilePictureLoading:true}
+  state = {
+    profileDetails:{},
+    profilePicture:{},
+    profileLoading:true,
+    profilePictureLoading:true
+  }
 
   componentDidMount(){
     const headers = {
@@ -43,27 +47,35 @@ export default class Profile extends React.Component{
   }
 
   render(){
-    console.log(this.state)
     return(
-  <div style={profileContainerStyle}>
-    <div style={{marginBottom:'60px'}}>
-    <center>
-      <h1>My Profile</h1>
-    </center>
-    </div>
-    <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
-    <div>
-    {this.state.profilePictureLoading?<Loading/>:<Image src={this.state.profilePicture} alt="No image"  fluid roundedCircle style={{height:"300px",
-    width:"280px",}}/>}
-    </div>
+      <div className="container">
+          <center>
+            <h1>My Profile</h1>
+          </center>
 
-    {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.name}</p>
-    <p><b>RollNo:</b>{this.state.profileDetails.rollNo}</p>
-    <p><b>Batch:</b>{this.state.profileDetails.batch}</p>
-    <p><b>Email:</b>{this.state.profileDetails.mailId}</p>
-  </div>}
-    </Card>
-    <div>
+        <div className="row justify-content-center" style={{border:"1px solid black",margin:"10px",padding:"5px"}}>
+          <div className="col-12 col-md-6">
+            {this.state.profilePictureLoading ?
+              <Loading/> :
+                <center>
+                  <img className="card-img rounded-circle top" style = {{width:"250px",height:"300px"}} src={this.state.profilePicture}
+                  alt={this.state.profileDetails.name} />
+                </center>
+              }
+          </div>
+          <div className="col-10 offset-2 col-md-5 offset-md-1">
+            {this.state.profileLoading?
+              <Loading/>:
+                <div>
+                  <p></p><br />
+                  <p><b>Name:</b>{this.state.profileDetails.name}</p>
+                  <p><b>RollNo:</b>{this.state.profileDetails.rollNo}</p>
+                  <p><b>Batch:</b>{this.state.profileDetails.batch}</p>
+                  <p><b>Email:</b>{this.state.profileDetails.mailId}</p>
+                </div>}
+          </div>
+        </div>
+        <div>
       <Card style={{justifyContent:"space-around",flexDirection:"row",display:'flex',border:'1px solid gray',padding:'20px',margin:'10px',borderRadius:'5px'}}>
         <b>Student Mentor Details</b>
         {this.state.profileLoading?<Loading/>:<div><p><b>Name:</b>{this.state.profileDetails.studentMentorName}</p>
@@ -83,16 +95,4 @@ export default class Profile extends React.Component{
   </div>
 );
 }
-}
-
-const profileContainerStyle = {
-
-    fontFamily:"Helvetica",
-    fontSize: '20px',
-}
-
-const profileImageStyle = {
-  height:"250px",
-  width:"250px",
-  borderRadius:"50%"
 }
