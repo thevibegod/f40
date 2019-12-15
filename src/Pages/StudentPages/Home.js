@@ -46,13 +46,13 @@ export default class Home extends Component {
           <Route
             exact
             path={`/AttendanceDetails&${this.props.user}`}
-            component={()=><AttendanceDetails user={this.state.user}/>}
+            component={()=><AttendanceDetails user={this.state.user} token={this.props.token}/>}
           />
           <Route exact path={`/Tasks&${this.props.user}`} component={Tasks} />
           <Route
             exact
             path={`/Assessments&${this.props.user}`}
-            component={Assessments}
+            component={()=><Assessments token={this.props.token}/>}
           />
           <Route
             exact
@@ -62,7 +62,7 @@ export default class Home extends Component {
           <Route
             exact
             path={`/Courses&${this.props.user}`}
-            component={()=><Courses user={this.state.user} token={this.props.token}/>}
+            component={()=><Courses token={this.props.token}/>}
           />
           <Route component={NotFound} />
         </Switch>

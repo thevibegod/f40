@@ -1,23 +1,42 @@
 import React,{useState,useEffect} from "react";
+import Loading from './Loading';
+import axios from "axios";
+import server from '../../config/server';
 
-export default function Assessments(){
+export default function Assessments({token}){
 
-      const [links,setLinks] = useState([]);
+      const [data,setData] = useState([]);
+      const [isLoading,setIsLoading] = useState(true);
 
       useEffect(() => {
         {
-          //Fetch operation
-          const val = ["https://www.google.co.in","https://www.google.co.in"];
-          setLinks(val);
+          const headers = {
+            "Content-Type": "application/json",
+            "X-Access-Token": token
+          };
+          axios.get(server+'/allassessments',{headers}).then(res=>{setData(res.data);setIsLoading(false);})
         }
       },[]);
+
+    if(isLoading){
+      return <Loading/>
+    }
 
       return(
         <div style={assessmentContainerStyle}>
         <center>
-          <div><h1>Assessments</h1></div>
-          <div><p>To attend Daily assessment, <a href={links[0]} target="_blank" rel="noopener noreferrer">click here</a></p></div>
-          <div><p>To attend Monthly assessment, <a href={links[1]} target="_blank" rel="noopener noreferrer">click here</a></p></div>
+          <h1>Assessments</h1>
+          <div>
+          {
+            data.map(val=>
+                   <div>
+                      <p><b>Assessment Type:</b>{val.assessmentType}</p>
+                      <p><b>Topic:</b>{val.topic}</p>
+                      <p><b>Link:</b><a href={val.link}>{val.link}</a></p>
+                   </div>
+            )
+          }
+        </div>
         </center>
         </div>
       );
