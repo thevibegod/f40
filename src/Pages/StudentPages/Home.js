@@ -46,14 +46,14 @@ export default class Home extends Component {
           />
           <Route
             exact
-            path={`/Profile&${this.props.user}`}
+            path={"/Profile"}
             component={() => (
               <Profile user={this.state.user} token={this.props.token} />
             )}
           />
           <Route
             exact
-            path={`/AttendanceDetails&${this.props.user}`}
+            path={"/AttendanceDetails"}
             component={() => (
               <AttendanceDetails
                 user={this.state.user}
@@ -64,19 +64,19 @@ export default class Home extends Component {
           <Route exact path={`/Tasks&${this.props.user}`} component={()=><Tasks user={this.state.user} token={this.props.token}/>} />
           <Route
             exact
-            path={`/Assessments&${this.props.user}`}
+            path={"/Assessments"}
             component={() => <Assessments token={this.props.token} />}
           />
           <Route
             exact
-            path={`/Notifications&${this.props.user}`}
+            path={"/Notifications"}
             component={() => (
               <Notifications user={this.state.user} token={this.props.token} />
             )}
           />
           <Route
             exact
-            path={`/Courses&${this.props.user}`}
+            path={"/Courses"}
             component={() => <Courses token={this.props.token} />}
           />
           <Route component={NotFound} />
