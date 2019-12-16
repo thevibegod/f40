@@ -30,6 +30,8 @@ class Login extends Component {
       })
       .then(response => {
         if (response.data.success) {
+          this.props.cookies.set("user", this.state.username);
+          this.props.cookies.set("token", response.data.token);
           this.props.handleLogin(this.state.username, response.data.token);
         } else {
           this.setState({ loading: false, incorrect: true });
@@ -39,6 +41,7 @@ class Login extends Component {
         console.log(error);
       });
   };
+
   render() {
     if (!this.state.loading) {
       return (

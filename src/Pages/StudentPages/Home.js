@@ -26,6 +26,7 @@ export default class Home extends Component {
           className="navbar"
           username={this.props.user}
           handleLogin={this.props.handleLogin}
+          cookies={this.props.cookies}
         />
         <Jumbotron>
           <center>

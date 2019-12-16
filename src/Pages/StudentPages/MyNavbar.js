@@ -7,6 +7,8 @@ export default class MyNavbar extends React.Component {
   }
 
   killLogin = () => {
+    this.props.cookies.remove("user");
+    this.props.cookies.remove("token");
     this.props.handleLogin(null);
   };
 
@@ -53,7 +55,7 @@ export default class MyNavbar extends React.Component {
               Courses
             </Link>
           </Nav>
-          <Link className="nav-link" to={`/`}onClick={this.killLogin}>
+          <Link className="nav-link" to={`/`} onClick={this.killLogin}>
             Logout
           </Link>
         </Navbar.Collapse>

@@ -6,28 +6,34 @@ import { withCookies } from "react-cookie";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, token: "" };
+    //If token already exists in cookie, use that
+    if (props.cookies.get("user") && props.cookies.get("token")) {
+      this.state = {
+        user: props.cookies.get("user"),
+        token: props.cookies.get("token")
+      };
+    } else this.state = { user: null, token: "" };
   }
+
+  handleLogin = (user, token) => {
+    this.setState({ user, token });
+  };
+
   render() {
     if (this.state.user) {
       return (
         <Home
           user={this.state.user}
           token={this.state.token}
-          handleLogin={(user, token) => {
-            this.setState({ user, token });
-          }}
+          handleLogin={this.handleLogin}
+          cookies={this.props.cookies}
         />
       );
     }
 
     return (
       <div>
-        <Login
-          handleLogin={(user, token) => {
-            this.setState({ user, token });
-          }}
-        />
+        <Login cookies={this.props.cookies} handleLogin={this.handleLogin} />
       </div>
     );
   }
