@@ -61,7 +61,7 @@ export default class Home extends Component {
               />
             )}
           />
-          <Route exact path={`/Tasks&${this.props.user}`} component={()=><Tasks user={this.state.user} token={this.props.token}/>} />
+          <Route exact path={"/Tasks"} component={()=><Tasks user={this.state.user} token={this.props.token}/>} />
           <Route
             exact
             path={"/Assessments"}

@@ -74,7 +74,7 @@ export default class Profile extends React.Component {
   };
 
   render() {
-    if (!this.state.profile && !this.state.profileLoading) {
+    if (!this.state.profileDetails && !this.state.profileLoading) {
       return (
         <div className="container">
           <center>

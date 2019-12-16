@@ -3,23 +3,7 @@ import Login from "./Pages/StudentPages/Login";
 import Home from "./Pages/StudentPages/Home";
 import { withCookies } from "react-cookie";
 
-<<<<<<< HEAD
-export default function App() {
-  const [user, setUser] = useState(null);
-  const [token,setToken] = useState('')
 
-  const handleLogin = (user,token)=>{setUser(user);setToken(token)}
-
-  if (user) {
-      return <Home user={user} token={token} handleLogin={handleLogin} />;
-  }
-
-  return (
-    <div>
-      <Login handleLogin={handleLogin} />
-    </div>
-  );
-=======
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +38,5 @@ class App extends Component {
       </div>
     );
   }
->>>>>>> ec7ff6c5a46b84ebaad01eaaa62b93552084b168
 }
 export default withCookies(App);

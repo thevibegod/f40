@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col,Card,Button,Form} from 'react-bootstrap';
+import {Col,Card,Button,Form,Accordion} from 'react-bootstrap';
 
 import Loading from './Loading';
 import axios from 'axios';
@@ -19,6 +19,15 @@ export default class Tasks extends React.Component{
 
   }
 
+  checkAttachments = attachmentArray =>{
+    attachmentArray.map(t=>{
+      if(t.rollNo===this.props.rollNo){
+        return true
+      }
+      return false
+    })
+  }
+
   handleChange = event => {
     this.setState({[event.target.name]:[event.target.value]});
   }
@@ -28,82 +37,51 @@ export default class Tasks extends React.Component{
     console.log(this.state)
   }
   render(){
-    if(isLoading){
+    if(this.state.isLoading){
       return <Loading/>
     }
 
     return(
-      <div>
-        {task_data.map((task)=>{
-          let task_present=false;
-          task.attachments.map(t){
-            if(t.rollNo===this.props.user){
-              task_present=true;
-            }
-          }
-          (<div>
-            <p>Task Topic:{task.topic}</p>
-            <p>Task Type:{task.type}</p>
-            <form action={server+'/uploadtask?rollNo='+this.props.user} method="POST">
-            <p>Feedback:</p><input type="text" name="feedback" placeholder={{task_present?task.attachments.feedback:''}}></input>
-            <p>Attachment:</p><input type="file" name="attachment" placeholder={{task_present?task.attachments.attachmentId:null}}></input>
-            <input type="submit" disabled={task_present}/>
-            </form>
-            </div>
+      <Accordion>
+      {
+        this.state.task_data.map(task=>{
+          return(
+            <Card style={{padding: "20px",
+            textAlign: "left",
+            marginBottom: "20px",
+            border: "1px solid gray"}}>
+              <Card.Header style={{textAlign:"center"}}>
+                <Accordion.Toggle as={Button}  eventKey={task._id}>
+                  <p>Topic:{task.topic}</p>
+                  <p>{task.taskType}</p>
+                  <p>Uploaded at {task.uploadTime}</p>
+                  <p>Deadline:{task.deadline}</p>
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey={task._id}>
+                <Card.Body>
+                {this.checkAttachments(task.attachments)?
+                  <form action={server+'/uploadtask?rollNo='+this.props.user+'&clear=true'} method="post">
+                  <p>Attachment:<input type="file" name="file" /></p>
+                  <p>Feedback:<input type="text" name="feedback" /></p>
+                  <input type="submit" name="submit" value="clear"/>
+                </form>
+                  :
+                  <form action={server+'/uploadtask?rollNo='+this.props.user} method="post">
+                  <p>Attachment:<input type="file" name="file" /></p>
+                  <p>Feedback:<input type="text" name="feedback" /></p>
+                  <input type="submit" name="submit"/>
+                </form>
+                }
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
           );
-        }
-        )}
-      </div>
-    )
+        })
+      }
+      </Accordion>
+    );
 
-//     return(<div>
-//   <center><h1>Tasks</h1></center>
-//   <div style={taskContainerStyle}>
-//   <Col style={{ justifyContent: "center" }}>
-//   <Card style={taskStyle}>
-//   <Form>
-//   <center><b><p>Daily Task</p></b></center>
-//   <p>Topic:{this.state.task_data.daily_task_topic}</p>
-//   <div>
-//   <div style={{justifyContent:'center',display:'flex',flexDirection:'row'}}>
-//   <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
-//   <p>Attachment</p><input type="file" name="da" onChange={this.handleChange} value={this.state.daily_task_attachment}/>
-//   </div>
-//   <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
-//   <p>Feedback</p><input type="text" name="df" onChange={this.handleChange} value={this.state.daily_task_feedback}/>
-//   <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
-//   {this.state.task_data.daily_graded?<p>You scored {this.state.task_data.daily_task_score}} out of 100</p>:<p>Your submission is not graded yet.</p>}
-//   </div>
-//   </div>
-//   <div>
-//   </div>
-//   </div>
-//   </Form>
-//   </Card>
-//
-//     <Card style={taskStyle}>
-//       <center><b><p>Monthly Task</p></b></center>
-//       <p>Topic:{this.state.task_data.monthly_task_topic}</p>
-//       <div>
-//         <div style={{justifyContent:'center',display:'flex',flexDirection:'row'}}>
-//           <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
-//             <p>Attachment</p><input type="file" name="ma" onChange={this.handleChange} value={this.state.monthly_task_attachment}/>
-//           </div>
-//           <div style={{justifyContent:'center',display:'flex',flexDirection:'column'}}>
-//             <p>Feedback</p><input type="text" name="mf" onChange={this.handleChange} value={this.state.monthly_task_feedback}/>
-//             <Button onClick={this.handleSubmit}  value="Submit" style={{alignSelf:'center',marginTop:'5px'}}>Submit</Button>
-//             {this.state.task_data.monthly_graded?<p>You scored {this.state.task_data.monthly_task_score} out of 100</p>:<p>Your submission is not graded yet.</p>}
-//           </div>
-//         </div>
-//       <div>
-//       </div>
-//   </div>
-// </Card>
-// </Col>
-// </div>
-// </div>
-//
-// );
 }
 }
 
