@@ -6,18 +6,17 @@ import Tasks from "./Tasks";
 import Assessments from "./Assessments.js";
 import Notifications from "./Notifications.js";
 import Courses from "./Courses.js";
-import AttendanceDetails from './AttendanceDetails.js';
+import AttendanceDetails from "./AttendanceDetails.js";
 import NotFound from "./NotFound.js";
-import {Jumbotron} from 'react-bootstrap';
+import { Jumbotron } from "react-bootstrap";
 
-//import './index.css';
 import { Route, Switch } from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state={user:this.props.user}
+    this.state = { user: this.props.user };
   }
 
   render() {
@@ -37,32 +36,47 @@ export default class Home extends Component {
           </center>
         </Jumbotron>
         <Switch>
-          <Route exact path="/" component={()=><Events user={this.state.user} token={this.props.token}/>} />
+          <Route
+            exact
+            path="/"
+            component={() => (
+              <Events user={this.state.user} token={this.props.token} />
+            )}
+          />
           <Route
             exact
             path={`/Profile&${this.props.user}`}
-            component={()=><Profile user={this.state.user} token={this.props.token}/>}
+            component={() => (
+              <Profile user={this.state.user} token={this.props.token} />
+            )}
           />
           <Route
             exact
             path={`/AttendanceDetails&${this.props.user}`}
-            component={()=><AttendanceDetails user={this.state.user} token={this.props.token}/>}
+            component={() => (
+              <AttendanceDetails
+                user={this.state.user}
+                token={this.props.token}
+              />
+            )}
           />
           <Route exact path={`/Tasks&${this.props.user}`} component={Tasks} />
           <Route
             exact
             path={`/Assessments&${this.props.user}`}
-            component={()=><Assessments token={this.props.token}/>}
+            component={() => <Assessments token={this.props.token} />}
           />
           <Route
             exact
             path={`/Notifications&${this.props.user}`}
-            component={()=><Notifications user={this.state.user} token={this.props.token}/>}
+            component={() => (
+              <Notifications user={this.state.user} token={this.props.token} />
+            )}
           />
           <Route
             exact
             path={`/Courses&${this.props.user}`}
-            component={()=><Courses token={this.props.token}/>}
+            component={() => <Courses token={this.props.token} />}
           />
           <Route component={NotFound} />
         </Switch>

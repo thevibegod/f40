@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 import Login from "./Pages/StudentPages/Login";
 import Home from "./Pages/StudentPages/Home";
+import { withCookies } from "react-cookie";
 
-
-
-export default function App(props) {
-  const [user, setUser] = useState(null);
-  const [token,setToken] = useState('')
-
-  if (user) {
-      return <Home user={user} token={token} handleLogin={(user,token)=>{setUser(user);setToken(token)}} />;
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: null, token: "" };
   }
+  render() {
+    if (this.state.user) {
+      return (
+        <Home
+          user={this.state.user}
+          token={this.state.token}
+          handleLogin={(user, token) => {
+            this.setState({ user, token });
+          }}
+        />
+      );
+    }
 
-  return (
-    <div>
-      <Login handleLogin={(user,token)=>{setUser(user);setToken(token)}} />
-    </div>
-  );
+    return (
+      <div>
+        <Login
+          handleLogin={(user, token) => {
+            this.setState({ user, token });
+          }}
+        />
+      </div>
+    );
+  }
 }
+export default withCookies(App);
