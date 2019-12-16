@@ -1,13 +1,12 @@
 import React from "react";
 import InfoItem from "./InfoItem.js";
-import Loading from './Loading';
+import Loading from "./Loading";
 import axios from "axios";
 import { Row } from "react-bootstrap";
 
-import server from '../../config/server';
+import server from "../../config/server";
 
 export default class Events extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { data: [], loading: true };
@@ -20,21 +19,16 @@ export default class Events extends React.Component {
       "X-Access-Token": this.props.token
     };
 
-
     axios
-      .get(
-        server+"/getallevents",
-        { headers }
-      )
+      .get(server + "/getallevents", { headers })
       .then(res => {
         console.log(res);
         this.setState({ data: res.data, loading: true });
         return Promise.all(
           res.data.map(value => {
-            return fetch(
-              server+`/eventpicture?title=${value.title}`,
-              { headers }
-            );
+            return fetch(server + `/eventpicture?title=${value.title}`, {
+              headers
+            });
           })
         );
       })
@@ -52,14 +46,13 @@ export default class Events extends React.Component {
   };
   render() {
     if (this.state.loading) {
-      return <Loading/>;
+      return <Loading />;
     } else {
       return (
         <div className="container">
           <center>
             <h1>Events</h1>
           </center>
-          {console.log("hi")}
           <Row style={{ justifyContent: "center" }}>
             {this.state.data.map(item => {
               console.log(item);
