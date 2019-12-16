@@ -7,6 +7,8 @@ export default class MyNavbar extends React.Component {
   }
 
   killLogin = () => {
+    this.props.cookies.remove("user");
+    this.props.cookies.remove("token");
     this.props.handleLogin(null);
   };
 
@@ -25,35 +27,31 @@ export default class MyNavbar extends React.Component {
             <Link className="nav-link" to={"/"}>
               Home
             </Link>
-            <Link className="nav-link" to={`/Profile&${this.props.username}`}>
+            <Link className="nav-link" to={"/Profile"}>
               Profile
             </Link>
-            <Link className="nav-link" to={`/Tasks&${this.props.username}`}>
+            <Link className="nav-link" to={"/Tasks"}>
               Tasks
             </Link>
-            <Link
-              className="nav-link"
-              to={`/Assessments&${this.props.username}`}
-            >
+            <Link className="nav-link" to={"/Assessments"}>
               Assessments
             </Link>
-            <Link
-              className="nav-link"
-              to={`/AttendanceDetails&${this.props.username}`}
-            >
+            <Link className="nav-link" to={"/AttendanceDetails"}>
               Attendance
             </Link>
-            <Link
-              className="nav-link"
-              to={`/Notifications&${this.props.username}`}
-            >
+            <Link className="nav-link" to={"/Notifications"}>
               Notifications
             </Link>
-            <Link className="nav-link" to={`/Courses&${this.props.username}`}>
+            <Link className="nav-link" to={"/Courses"}>
               Courses
             </Link>
           </Nav>
-          <Link className="nav-link" to={`/`}onClick={this.killLogin}>
+          <span className="navbar-text mr-2">Hi {this.props.username} !</span>
+          <Link
+            className="btn btn-outline-danger"
+            to={"/"}
+            onClick={this.killLogin}
+          >
             Logout
           </Link>
         </Navbar.Collapse>
