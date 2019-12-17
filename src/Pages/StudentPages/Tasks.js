@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col,Card,Button,Form,Accordion} from 'react-bootstrap';
-
 import Loading from './Loading';
 import axios from 'axios';
 import server from '../../config/server';
@@ -8,57 +7,89 @@ const bson = require('bson');
 
 export default class Tasks extends React.Component{
 
-  state = {task_data:{},isLoading:true,file:null,feedback:'',fileName:'',topic:'',taskType:''}
+  state = {
+    task_data:{},
+    isLoading:true,
+    file:null,
+    feedback:'',
+    fileName:'',
+    topic:'',
+    taskType:''
+  }
 
   componentDidMount(){
     const headers = {
       "Content-Type": "application/json",
       "X-Access-Token": this.props.token
     };
-    axios.get(server+'/alltasks',{headers}).then(res=>this.setState({task_data:res.data,isLoading:false}))
-    //const data = {daily_task_topic:'Daily-Task',daily_task_attachment:null,daily_task_feedback:'Feedback',monthly_task_topic:'Monthly-Task',monthly_task_attachment:null,monthly_task_feedback:'Feedback',daily_graded:false,daily_task_score:0,monthly_task_score:80,monthly_graded:true}
-
+    axios.get(server+'/alltasks',{headers}).then(res=>this.setState({task_data:res.data,isLoading:false}));
   }
 
-  checkAttachments = attachmentArray =>{
-    attachmentArray.map(t=>{
-      if(t.rollNo===this.props.user){
-        return true
-      }
-      return false
-    })
+  // checkAttachments = attachmentArray =>{
+  //   var arr = [];
+  //   attachmentArray.map(t=>{
+  //     arr.push(t.rollNo);
+  //   })
+  //   var isThere = arr.filter(a => a == this.props.user);
+  //
+  //   if(isThere.length){
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  checkAttachments = (attachmentArray, taskType, topic) =>{
+
+    var obj = attachmentArray.filter(task => task.rollNo === this.props.user);
+
+    if(obj.length){
+      var obj = obj[0];
+      return(
+        <form onSubmit={this.handleSubmitClear}>
+          <p>Attachment:<a href={obj.attachmentId} target="_blank">{obj.attachmentId}</a></p>
+          <p>Feedback:{obj.feedback}</p>
+          <input type="hidden" name="taskType" value={taskType} />
+          <input type="hidden" name="topic" value={topic} />
+          <input type="submit" name="submit" value="Clear"/>
+        </form>
+      );
+    }
+    else{
+      return(
+        <form onSubmit={this.handleSubmit}>
+          <p>Attachment:<input type="file" name="attachment" onChange={this.onChange} required/></p>
+          <p>Feedback:<input type="text" name="feedback" onChange={this.handleChange}/></p>
+          <input type="hidden" name="taskType" value={taskType} />
+          <input type="hidden" name="topic" value={topic} />
+          <input type="submit" name="submit" value="Submit"/>
+        </form>
+      );
+    }
   }
 
   handleChange = event => {
     this.setState({[event.target.name]:event.target.value});
   }
 
-   onChange=event=> {
-  var file = event.target.files[0];
-  this.setState({file:event.target.files[0]})
-//  var fileNameArray =event.target.value.split("\\");
-//  this.setState({fileName:fileNameArray[fileNameArray.length-1]})
-//  var reader = new FileReader();
-//  reader.onload = (event)=> {
-    // The file's text will be printed here
-  //  this.setState({file:event.target.result})
-//  };
+  onChange = event => {
+    var file = event.target.files[0];
+    this.setState({file:event.target.files[0]})
+  }
 
-//  reader.readAsText(file);
-}
+  handleSubmit = (event) => {
+    const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
+    event.preventDefault();
+    var formData = new FormData(event.target);
+    axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res))
+  }
 
-handleSubmit=(event)=>{
-  const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
-  event.preventDefault();
-  var formData = new FormData(event.target);
-  console.log(formData)
-  //formData.append('file',this.state.file)
-//  formData.set('feedback',this.state.feedback)
-//  formData.set('taskType',this.state.taskType)
-  //formData.set('topic',this.state.topic)
+  handleSubmitClear = (event) => {
+    const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
+    event.preventDefault();
+    var formData = new FormData(event.target);
+    axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear',formData,{headers}).then(res=>console.log(res))
+  }
 
-  axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res))
-}
   render(){
     if(this.state.isLoading){
       return <Loading/>
@@ -83,21 +114,7 @@ handleSubmit=(event)=>{
               </Card.Header>
               <Accordion.Collapse eventKey={task._id}>
                 <Card.Body>
-                {this.checkAttachments(task.attachments)?
-                  <form> //action={server+'/uploadtask?rollNo='+this.props.user+'&clear=true'} method="post">
-                  <p>Attachment:<input type="file" name="file" /></p>
-                  <p>Feedback:<input type="text" name="feedback" /></p>
-                  <input type="submit" name="submit" onClick={this.handleSubmit}/>
-                </form>
-                  :
-                  <form onSubmit={this.handleSubmit}>// action={server+'/uploadtask?rollNo='+this.props.user} method="POST">
-                  <p>Attachment:<input type="file" name="attachment" onChange={this.onChange} /></p>
-                  <p>Feedback:<input type="text" name="feedback" onChange={this.handleChange}/></p>
-                  <input type="hidden" name="taskType" value={task.taskType} />
-                  <input type="hidden" name="topic" value={task.topic} />
-                  <input type="submit"/>
-                </form>
-                }
+                {this.checkAttachments(task.attachments,task.taskType,task.topic)}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
