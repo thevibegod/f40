@@ -4,10 +4,11 @@ import {Col,Card,Button,Form,Accordion} from 'react-bootstrap';
 import Loading from './Loading';
 import axios from 'axios';
 import server from '../../config/server';
+const bson = require('bson');
 
 export default class Tasks extends React.Component{
 
-  state = {task_data:{},isLoading:true}
+  state = {task_data:{},isLoading:true,file:null,feedback:'',fileName:'',topic:'',taskType:''}
 
   componentDidMount(){
     const headers = {
@@ -21,7 +22,7 @@ export default class Tasks extends React.Component{
 
   checkAttachments = attachmentArray =>{
     attachmentArray.map(t=>{
-      if(t.rollNo===this.props.rollNo){
+      if(t.rollNo===this.props.user){
         return true
       }
       return false
@@ -29,13 +30,35 @@ export default class Tasks extends React.Component{
   }
 
   handleChange = event => {
-    this.setState({[event.target.name]:[event.target.value]});
+    this.setState({[event.target.name]:event.target.value});
   }
 
+   onChange=event=> {
+  var file = event.target.files[0];
+  this.setState({file:event.target.files[0]})
+//  var fileNameArray =event.target.value.split("\\");
+//  this.setState({fileName:fileNameArray[fileNameArray.length-1]})
+//  var reader = new FileReader();
+//  reader.onload = (event)=> {
+    // The file's text will be printed here
+  //  this.setState({file:event.target.result})
+//  };
 
-  handleSubmit = event => {
-    console.log(this.state)
-  }
+//  reader.readAsText(file);
+}
+
+handleSubmit=(event)=>{
+  const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
+  event.preventDefault();
+  var formData = new FormData(event.target);
+  console.log(formData)
+  //formData.append('file',this.state.file)
+//  formData.set('feedback',this.state.feedback)
+//  formData.set('taskType',this.state.taskType)
+  //formData.set('topic',this.state.topic)
+
+  axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res))
+}
   render(){
     if(this.state.isLoading){
       return <Loading/>
@@ -61,16 +84,18 @@ export default class Tasks extends React.Component{
               <Accordion.Collapse eventKey={task._id}>
                 <Card.Body>
                 {this.checkAttachments(task.attachments)?
-                  <form action={server+'/uploadtask?rollNo='+this.props.user+'&clear=true'} method="post">
+                  <form> //action={server+'/uploadtask?rollNo='+this.props.user+'&clear=true'} method="post">
                   <p>Attachment:<input type="file" name="file" /></p>
                   <p>Feedback:<input type="text" name="feedback" /></p>
-                  <input type="submit" name="submit" value="clear"/>
+                  <input type="submit" name="submit" onClick={this.handleSubmit}/>
                 </form>
                   :
-                  <form action={server+'/uploadtask?rollNo='+this.props.user} method="post">
-                  <p>Attachment:<input type="file" name="file" /></p>
-                  <p>Feedback:<input type="text" name="feedback" /></p>
-                  <input type="submit" name="submit"/>
+                  <form onSubmit={this.handleSubmit}>// action={server+'/uploadtask?rollNo='+this.props.user} method="POST">
+                  <p>Attachment:<input type="file" name="attachment" onChange={this.onChange} /></p>
+                  <p>Feedback:<input type="text" name="feedback" onChange={this.handleChange}/></p>
+                  <input type="hidden" name="taskType" value={task.taskType} />
+                  <input type="hidden" name="topic" value={task.topic} />
+                  <input type="submit"/>
                 </form>
                 }
                 </Card.Body>
