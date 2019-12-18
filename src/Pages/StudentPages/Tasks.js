@@ -34,22 +34,49 @@ export default class Tasks extends React.Component{
       var obj = obj[0];
       return(
         <form onSubmit={this.handleSubmitClear}>
-          <p>Attachment:<a href={server + obj.attachmentId} target="_blank">{obj.attachmentId}</a></p>
-          <p>Feedback:{obj.feedback}</p>
           <input type="hidden" name="taskType" value={taskType} />
           <input type="hidden" name="topic" value={topic} />
-          <input type="submit" name="submit" value="Clear"/>
+          <div className="row form-group">
+            <div className="col-12 col-md-2"><b style={{padding:"25px 0px", margin:'0px',fontSize:'20px', textShadow:'1px 1px gray'}}>Attachment : </b></div>
+            <div className="col-12 col-md-10" style={{padding : '0px 25px'}}>
+              <div className="row" style={{border:'1px solid gray',borderRadius:'5px'}}>
+                <a href={server + obj.attachmentId} className="col-10 col-md-11" style={{padding:'5px 10px',textDecoration:'none', backgroundColor:'#dbd9d9'}} target="_blank">{obj.attachmentId.slice(7)}</a>
+                <button type="submit" name="submit" className="btn btn-secondary col-2 col-md-1">&times;</button>
+              </div>
+            </div>
+          </div>
+          <div className="row form-group">
+            <div className="col-12 col-md-2"><b style={{padding:"25px 0px", margin:'0px',fontSize:'20px', textShadow:'1px 1px gray'}}>Feedback : </b></div>
+            <div className="col-12 col-md-10" style={{fontSize:'20px'}}>
+              {obj.feedback}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 col-md-3 offset-md-2">
+              <button type="submit" name="submit" className="btn btn-primary btn-block">Unsubmit</button>
+            </div>
+          </div>
         </form>
       );
     }
     else{
       return(
         <form onSubmit={this.handleSubmit}>
-          <p>Attachment:<input type="file" name="attachment" onChange={this.onChange} required/></p>
-          <p>Feedback:<input type="text" name="feedback" onChange={this.handleChange}/></p>
+          <div className ="form-group row">
+            <label style={{padding:'2px', fontWeight:'bold', fontSize:'20px', textShadow:'1px 1px gray'}} id="file" className="col-12 col-md-2 form-label">Attachment : </label>
+            <div className="col-12 col-md-10"><input type="file" style={{border:'1px solid #dedede',padding:'2px'}} className="form-control-file" name="attachment" id="file" onChange={this.onChange} required/></div>
+          </div>
+          <div className ="form-group row">
+            <label style={{padding:'2px', fontWeight:'bold', fontSize:'20px', textShadow:'1px 1px gray'}} id="feedback" className="col-12 col-md-2 form-label">Feedback : </label>
+            <div className="col-12 col-md-10"><input type="text" name="feedback" id="feedback" className="form-control" onChange={this.handleChange} required/></div>
+          </div>
           <input type="hidden" name="taskType" value={taskType} />
           <input type="hidden" name="topic" value={topic} />
-          <input type="submit" name="submit" value="Submit"/>
+          <div className="row">
+            <div className="col-12 col-md-3 offset-md-2">
+              <button type="submit" name="submit" className="btn btn-primary btn-block">Submit</button>
+            </div>
+          </div>
         </form>
       );
     }
@@ -68,14 +95,16 @@ export default class Tasks extends React.Component{
     const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
     event.preventDefault();
     var formData = new FormData(event.target);
-    axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res))
+    axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res));
+    window.location.reload(false);
   }
 
   handleSubmitClear = (event) => {
     const headers={"Content-Type":"application/x-www-form-urlencoded","X-Access-Token":this.props.token}
     event.preventDefault();
     var formData = new FormData(event.target);
-    axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear=true',formData,{headers}).then(res=>console.log(res))
+    axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear=true',formData,{headers}).then(res=>console.log(res));
+    window.location.reload(false);
   }
 
   render(){
@@ -90,11 +119,12 @@ export default class Tasks extends React.Component{
           return(
             <div className="row">
               <div className="col-12" style={{padding:'10px',margin:'5px'}}>
-                <Accordion.Toggle as={Button} className="col-12" eventKey={task._id}>
-                  <p>Topic:{task.topic}</p>
-                  <p>{task.taskType}</p>
-                  <p>Uploaded at {task.uploadTime}</p>
-                  <p>Deadline:{task.deadline}</p>
+                <Accordion.Toggle as={Button} className="col-12" eventKey={task._id} style={{fontSize : '20px'}}>
+                  <p style={{float:'left'}}><b style={{color:"black"}}>Topic : </b>{task.topic}</p>
+                  <p style={{float:'right', padding: '10px 20px'}} className="badge badge-light">{task.taskType}</p>
+                  <p style={{clear: 'both'}}/>
+                  <p style={{float:'left'}}><b style={{color:"black"}}>Uploaded at : </b><span style={{color : "#1a4f0d"}}>{task.uploadTime}</span></p>
+                  <p style={{float:'right'}}><b style={{color:'black'}}>Deadline : </b><span style={{color : "#87000b"}}>{task.deadline}</span></p>
                 </Accordion.Toggle>
               </div>
               <Accordion.Collapse eventKey={task._id} className="col-12" style={{padding:'10px',margin:'5px'}}>
