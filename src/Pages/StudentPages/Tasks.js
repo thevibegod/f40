@@ -25,18 +25,6 @@ export default class Tasks extends React.Component{
     axios.get(server+'/alltasks',{headers}).then(res=>this.setState({task_data:res.data,isLoading:false}));
   }
 
-  // checkAttachments = attachmentArray =>{
-  //   var arr = [];
-  //   attachmentArray.map(t=>{
-  //     arr.push(t.rollNo);
-  //   })
-  //   var isThere = arr.filter(a => a == this.props.user);
-  //
-  //   if(isThere.length){
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   checkAttachments = (attachmentArray, taskType, topic) =>{
 
@@ -46,7 +34,7 @@ export default class Tasks extends React.Component{
       var obj = obj[0];
       return(
         <form onSubmit={this.handleSubmitClear}>
-          <p>Attachment:<a href={obj.attachmentId} target="_blank">{obj.attachmentId}</a></p>
+          <p>Attachment:<a href={server + obj.attachmentId} target="_blank">{obj.attachmentId}</a></p>
           <p>Feedback:{obj.feedback}</p>
           <input type="hidden" name="taskType" value={taskType} />
           <input type="hidden" name="topic" value={topic} />
@@ -84,10 +72,10 @@ export default class Tasks extends React.Component{
   }
 
   handleSubmitClear = (event) => {
-    const headers={"Content-Type": "multipart/form-data","X-Access-Token":this.props.token}
+    const headers={"Content-Type":"application/x-www-form-urlencoded","X-Access-Token":this.props.token}
     event.preventDefault();
     var formData = new FormData(event.target);
-    axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear',formData,{headers}).then(res=>console.log(res))
+    axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear=true',formData,{headers}).then(res=>console.log(res))
   }
 
   render(){
@@ -96,28 +84,25 @@ export default class Tasks extends React.Component{
     }
 
     return(
-      <Accordion>
+      <Accordion className="container">
       {
         this.state.task_data.map(task=>{
           return(
-            <Card style={{padding: "20px",
-            textAlign: "left",
-            marginBottom: "20px",
-            border: "1px solid gray"}}>
-              <Card.Header style={{textAlign:"center"}}>
-                <Accordion.Toggle as={Button}  eventKey={task._id}>
+            <div className="row">
+              <div className="col-12" style={{padding:'10px',margin:'5px'}}>
+                <Accordion.Toggle as={Button} className="col-12" eventKey={task._id}>
                   <p>Topic:{task.topic}</p>
                   <p>{task.taskType}</p>
                   <p>Uploaded at {task.uploadTime}</p>
                   <p>Deadline:{task.deadline}</p>
                 </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey={task._id}>
-                <Card.Body>
+              </div>
+              <Accordion.Collapse eventKey={task._id} className="col-12" style={{padding:'10px',margin:'5px'}}>
+                <div className="col-12">
                 {this.checkAttachments(task.attachments,task.taskType,task.topic)}
-                </Card.Body>
+                </div>
               </Accordion.Collapse>
-            </Card>
+            </div>
           );
         })
       }

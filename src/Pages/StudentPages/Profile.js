@@ -45,25 +45,15 @@ export default class Profile extends React.Component {
       });
   }
 
-  Achievements = ({ achievements }) => {
+  Achievements = (achievements) => {
     if (achievements === undefined || achievements.length === 0) {
       return null;
     }
     return (
-      <Card
-        style={{
-          justifyContent: "space-around",
-          flexDirection: "row",
-          display: "flex",
-          border: "1px solid gray",
-          padding: "20px",
-          margin: "10px",
-          borderRadius: "5px"
-        }}
-      >
+      <Card className="col-12" >
         <div>
+          <b>Achievements</b>
           <ol>
-            <b>Achievements</b>
             {achievements.map(data => {
               return <li>{data}</li>;
             })}
@@ -136,23 +126,17 @@ export default class Profile extends React.Component {
             )}
           </div>
         </div>
-        <div>
-          <Card
-            style={{
-              justifyContent: "space-around",
-              flexDirection: "row",
-              display: "flex",
-              border: "1px solid gray",
-              padding: "20px",
-              margin: "10px",
-              borderRadius: "5px"
-            }}
-          >
-            <b>Student Mentor Details</b>
+        <div className="row justify-content-cente" style={{ border: "1px solid black", margin: "10px", padding: "5px"}}>
+          <Card className="col-12 col-md-6">
+
             {this.state.profileLoading ? (
+              <div>
+              <h3>Student Mentor Details</h3>
               <Loading />
+              </div>
             ) : (
               <div>
+              <h3>Student Mentor Details</h3>
                 <p>
                   <b>Name:</b>
                   {this.state.profileDetails.studentMentorName}
@@ -168,22 +152,15 @@ export default class Profile extends React.Component {
               </div>
             )}
           </Card>
-          <Card
-            style={{
-              justifyContent: "space-around",
-              flexDirection: "row",
-              display: "flex",
-              border: "1px solid gray",
-              padding: "20px",
-              margin: "10px",
-              borderRadius: "5px"
-            }}
-          >
-            <b>Faculty Mentor Details</b>
+          <Card className="col-12 col-md-6">
             {this.state.profileLoading ? (
+              <div>
+                <h3>Faculty Mentor Details</h3>
               <Loading />
+              </div>
             ) : (
               <div>
+                <h3>Faculty Mentor Details</h3>
                 <p>
                   <b>Name:</b>
                   {this.state.profileDetails.facultyMentorName}
@@ -200,7 +177,9 @@ export default class Profile extends React.Component {
             )}
           </Card>
         </div>
-        {this.Achievements}
+        <div className="row justify-content-center" style={{ border: "1px solid black", margin: "10px", padding: "5px" }}>
+          {this.Achievements(this.state.profileDetails.achievements)}
+        </div>
       </div>
     );
   }

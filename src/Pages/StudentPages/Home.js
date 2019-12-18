@@ -8,7 +8,6 @@ import Notifications from "./Notifications.js";
 import Courses from "./Courses.js";
 import AttendanceDetails from "./AttendanceDetails.js";
 import NotFound from "./NotFound.js";
-import View from './View'
 import { Jumbotron } from "react-bootstrap";
 
 import { Route, Switch } from "react-router-dom";
@@ -80,7 +79,6 @@ export default class Home extends Component {
             path={"/Courses"}
             component={() => <Courses token={this.props.token} />}
           />
-          <Route exact path={"/view"} component={()=><View token={this.props.token}/>}/>
           <Route component={NotFound} />
         </Switch>
       </div>

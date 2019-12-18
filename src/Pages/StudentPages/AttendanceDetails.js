@@ -28,10 +28,10 @@ if(isLoading){
   return <Loading/>;
 }else{
       return(
-        <div style={assessmentContainerStyle}>
-        <center>
-          <div><h1>Attendance</h1></div>
-          <Table size bordered>
+        <div className="container" style={assessmentContainerStyle}>
+        <center className="row">
+          <div className="col-10 offset-1"><h1>Attendance</h1></div>
+          <Table size bordered className="col-10 offset-1">
             <thead>
             <tr>
               <th>Date</th>
@@ -52,5 +52,5 @@ if(isLoading){
 }
 const assessmentContainerStyle = {
     fontFamily:"Helvetica",
-    fontSize: '20px'
+    fontSize: '20px',
 }
