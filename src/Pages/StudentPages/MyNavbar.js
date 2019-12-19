@@ -46,15 +46,15 @@ export default class MyNavbar extends React.Component {
               Courses
             </Link>
           </Nav>
-          <span className="navbar-text mr-2">Hi {this.props.username} !</span>
-          <Link
-            className="btn btn-outline-danger"
-            to={"/"}
-            onClick={this.killLogin}
-          >
-            Logout
-          </Link>
         </Navbar.Collapse>
+        <span className="navbar-text mr-2">Hi {this.props.username} !</span>
+        <Link
+          className="btn btn-outline-danger"
+          to={"/"}
+          onClick={this.killLogin}
+        >
+          Logout
+        </Link>
       </Navbar>
     );
   }

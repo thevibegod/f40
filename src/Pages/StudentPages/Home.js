@@ -28,9 +28,11 @@ export default class Home extends Component {
           handleLogin={this.props.handleLogin}
           cookies={this.props.cookies}
         />
-        <Jumbotron>
+      <Jumbotron className="d-none d-md-block">
           <center>
             <div className="container">
+              <img src="images.jpeg" alt="KCT" style={{float : 'left', width : '150px'}} />
+              <img src="ece_logo.png" alt="ECE" style={{float : 'right', width : '150px'}} />
               <h1>Department of Electronics & Communication Engineering</h1>
               <h2>Kumaraguru College of Technology</h2>
             </div>

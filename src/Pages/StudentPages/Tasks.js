@@ -96,7 +96,9 @@ export default class Tasks extends React.Component{
     event.preventDefault();
     var formData = new FormData(event.target);
     axios.post(server+'/uploadtask?rollNo='+this.props.user,formData,{headers}).then(res=>console.log(res));
-    window.location.reload(false);
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 3000)
   }
 
   handleSubmitClear = (event) => {
@@ -104,7 +106,9 @@ export default class Tasks extends React.Component{
     event.preventDefault();
     var formData = new FormData(event.target);
     axios.post(server+'/uploadtask?rollNo='+this.props.user+'&clear=true',formData,{headers}).then(res=>console.log(res));
-    window.location.reload(false);
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 3000)
   }
 
   render(){
@@ -114,14 +118,15 @@ export default class Tasks extends React.Component{
 
     return(
       <Accordion className="container">
+        <center><h2>Tasks</h2></center>
       {
         this.state.task_data.map(task=>{
           return(
-            <div className="row">
-              <div className="col-12" style={{padding:'10px',margin:'5px'}}>
+            <div className="row" style={{border:'1px solid #3f99d9',margin:'10px',borderRadius:'5px',boxShadow:'0px 0px 2px 2px #57ebe4'}}>
+              <div className="col-12" style={{padding:'0px',margin:'0px'}}>
                 <Accordion.Toggle as={Button} className="col-12" eventKey={task._id} style={{fontSize : '20px'}}>
                   <p style={{float:'left'}}><b style={{color:"black"}}>Topic : </b>{task.topic}</p>
-                  <p style={{float:'right', padding: '10px 20px'}} className="badge badge-light">{task.taskType}</p>
+                  <p style={{float:'right', padding: '10px 20px'}} className="badge badge-light">{task.taskType[0].toUpperCase() + task.taskType.slice(1)}</p>
                   <p style={{clear: 'both'}}/>
                   <p style={{float:'left'}}><b style={{color:"black"}}>Uploaded at : </b><span style={{color : "#1a4f0d"}}>{task.uploadTime}</span></p>
                   <p style={{float:'right'}}><b style={{color:'black'}}>Deadline : </b><span style={{color : "#87000b"}}>{task.deadline}</span></p>

@@ -23,22 +23,25 @@ export default function Assessments({token}){
     }
 
       return(
-        <div style={assessmentContainerStyle}>
-        <center>
-          <h1>Assessments</h1>
-          <div>
+        <div className="container" style={assessmentContainerStyle}>
+        <div className="row">
+          <div className="col-12 text-center">
+            <h1>Assessments</h1>
+          </div>
+        </div>
+        <div className="row">
           {
             data.map(val=>
-                   <div>
-                      <p><b>Assessment Type:</b>{val.assessmentType}</p>
-                      <p><b>Topic:</b>{val.topic}</p>
-                      <p><b>Link:</b><a href={val.link}>{val.link}</a></p>
-                   </div>
+             <div className="col-12" style={{backgroundColor: '#d2d3d4' ,border:'1px solid blue',padding :'10px', borderRadius : '10px', margin : '5px'}}>
+               <p style={{float:'left'}}><b style={{padding:'2px', fontSize:'20px', textShadow:'1px 1px gray'}}>Topic:</b>{val.topic}</p>
+               <p style={{float:'right', padding:'10px 20px', fontSize:'17px', borderRadius : '5px'}} className="badge badge-info">{val.assessmentType[0].toUpperCase() + val.assessmentType.slice(1)}</p>
+               <p  style={{clear:'both'}}/>
+               <p className="text-center"><b>Link:</b><a href={val.link}>{val.link}</a></p>
+             </div>
             )
           }
         </div>
-        </center>
-        </div>
+      </div>
       );
 }
 
